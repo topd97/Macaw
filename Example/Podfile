@@ -1,6 +1,13 @@
-platform :ios, '9.0'
 use_frameworks!
 
 target 'Example' do
+	platform :ios, '9.0'
+
+	pod 'Macaw', :path => '../'
+end
+
+target 'Example-tvOS' do
+	platform :tvos, 9.0
+
 	pod 'Macaw', :path => '../'
 end

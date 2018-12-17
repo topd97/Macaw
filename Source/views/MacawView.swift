@@ -149,27 +149,35 @@ open class MacawView: MView, MGestureRecognizerDelegate {
         let tapRecognizer = MTapGestureRecognizer(target: self, action: #selector(MacawView.handleTap))
         let longTapRecognizer = MLongPressGestureRecognizer(target: self, action: #selector(MacawView.handleLongTap(recognizer:)))
         let panRecognizer = MPanGestureRecognizer(target: self, action: #selector(MacawView.handlePan))
+        #if os(iOS)
         let rotationRecognizer = MRotationGestureRecognizer(target: self, action: #selector(MacawView.handleRotation))
         let pinchRecognizer = MPinchGestureRecognizer(target: self, action: #selector(MacawView.handlePinch))
+        #endif
 
         tapRecognizer.delegate = self
         longTapRecognizer.delegate = self
         panRecognizer.delegate = self
+        #if os(iOS)
         rotationRecognizer.delegate = self
         pinchRecognizer.delegate = self
+        #endif
 
         tapRecognizer.cancelsTouchesInView = false
         longTapRecognizer.cancelsTouchesInView = false
         panRecognizer.cancelsTouchesInView = false
+        #if os(iOS)
         rotationRecognizer.cancelsTouchesInView = false
         pinchRecognizer.cancelsTouchesInView = false
+        #endif
 
         self.removeGestureRecognizers()
         self.addGestureRecognizer(tapRecognizer)
         self.addGestureRecognizer(longTapRecognizer)
         self.addGestureRecognizer(panRecognizer)
+        #if os(iOS)
         self.addGestureRecognizer(rotationRecognizer)
         self.addGestureRecognizer(pinchRecognizer)
+        #endif
     }
 
     open override func layoutSubviews() {
@@ -460,6 +468,8 @@ open class MacawView: MView, MGestureRecognizerDelegate {
     }
 
     // MARK: - Rotation
+    
+    #if os(iOS)
 
     @objc func handleRotation(_ recognizer: MRotationGestureRecognizer) {
         if !self.node.shouldCheckForRotate() {
@@ -544,6 +554,8 @@ open class MacawView: MView, MGestureRecognizerDelegate {
             recognizersMap.removeValue(forKey: recognizer)
         }
     }
+    
+    #endif
 
     // MARK: - MGestureRecognizerDelegate
 
